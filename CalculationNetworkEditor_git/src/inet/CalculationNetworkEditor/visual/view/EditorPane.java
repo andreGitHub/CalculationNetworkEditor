@@ -5,21 +5,21 @@
  */
 package inet.CalculationNetworkEditor.visual.view;
 
-import inet.CalculationNetworkEditor2.visual.contol.listener.ComponentResizedListener;
+import inet.CalculationNetworkEditor.visual.contol.listener.ComponentResizedListener;
 import edu.uci.ics.jung.graph.Graph;
-import inet.CalculationNetworkEditor2.Logic.ILogic;
-import inet.CalculationNetworkEditor2.Logic.Logic;
-import inet.CalculationNetworkEditor2.Storage.IStorage;
-import inet.CalculationNetworkEditor2.Transformers.EdgePaintTransformer;
-import inet.CalculationNetworkEditor2.Transformers.VertexPaintTransformer;
-import inet.CalculationNetworkEditor2.visual.contol.controller.BackendController;
-import inet.CalculationNetworkEditor2.visual.view.tabbedPane.TabSwitchedListener;
-import inet.CalculationNetworkEditor2.visual.contol.listener.MouseAbstraction;
-import inet.CalculationNetworkEditor2.visual.contol.controller.ViewController;
-import inet.CalculationNetworkEditor2.visual.contol.listener.EditingPanelsListener;
-import inet.CalculationNetworkEditor2.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerBoth;
-import inet.CalculationNetworkEditor2.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerPhysical;
-import inet.CalculationNetworkEditor2.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerVirtual;
+import inet.CalculationNetworkEditor.Logic.ILogic;
+import inet.CalculationNetworkEditor.Logic.Logic;
+import inet.CalculationNetworkEditor.Storage.IStorage;
+import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
+import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
+import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
+import inet.CalculationNetworkEditor.visual.contol.listener.TabSwitchedListener;
+import inet.CalculationNetworkEditor.visual.contol.listener.MouseAbstraction;
+import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
+import inet.CalculationNetworkEditor.visual.contol.listener.EditingPanelsListener;
+import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerBoth;
+import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerPhysical;
+import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerVirtual;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.util.ArrayList;

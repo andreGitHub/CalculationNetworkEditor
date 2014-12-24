@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inet.CalculationNetworkEditor2.visual.view;
+package inet.CalculationNetworkEditor.visual.view;
 
 import java.util.Collection;
 import java.util.List;
