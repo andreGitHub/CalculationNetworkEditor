@@ -74,17 +74,21 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
     private Factory<V> vertexFactory = null;
     private Factory<E> edgeFactory = null;
     
+    private Dimension actDimension = null;
+    
     public EditorPane(
                     List<Graph<V,E>> phys, List<Graph<V,E>> virts,
                     HashMap<V,V> stackVertex, HashMap<E,List<E>> stackEdge, 
                     HashMap<V, Double> vertexRessources, HashMap<E, Double> edgeRessources,
                     Factory<V> pVertexFactory, Factory<E> pEdgeFactory,
-                    Dimension actDimension) {
+                    Dimension pActDimension) {
         super();
-        Dimension tabbedDimensions = new Dimension((int)actDimension.getWidth()-200,(int)actDimension.getHeight());
+        actDimension = pActDimension;
         
-        setSize(actDimension);
-        setPreferredSize(actDimension);
+        Dimension tabbedDimensions = new Dimension((int)pActDimension.getWidth()-200,(int)pActDimension.getHeight());
+        
+        setSize(pActDimension);
+        setPreferredSize(pActDimension);
         setLayout(new BorderLayout());
         
         vertexFactory = pVertexFactory;
@@ -233,8 +237,8 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         add(rightPanel, BorderLayout.LINE_END);
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 500, 10));
-        rightPanel.setSize(200,500);
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
+        rightPanel.setSize(200,(int)actDimension.getHeight()-100);
         rightPanel.setPreferredSize(new Dimension(200,500));
         
         // add Content Stacking-Label
@@ -263,8 +267,14 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
         toPanel.add(buttonsEdgePanel, BorderLayout.CENTER);
         
 
+        // path listPanel
+        //JPanel pathListPanel = new JPanel();
+        //pathListPanel.setLayout(new BorderLayout);
+        
         defaultListModel = new DefaultListModel<E>();
         pathList = new JList<E>(defaultListModel);
+        pathList.setSize(180,100);
+        pathList.setPreferredSize(new Dimension(180,100));
         buttonsEdgePanel.add(pathList, BorderLayout.CENTER);
         
         
@@ -359,7 +369,7 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         add(rightPanel, BorderLayout.LINE_END);
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 500, 10));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
         
