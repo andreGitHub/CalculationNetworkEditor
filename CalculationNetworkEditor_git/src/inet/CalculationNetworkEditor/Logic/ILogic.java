@@ -10,7 +10,6 @@ import inet.CalculationNetworkEditor.Storage.IStorage;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
-import javafx.util.Pair;
 
 /**
  *
