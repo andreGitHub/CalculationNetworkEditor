@@ -113,6 +113,10 @@ public class BackendController<V,E> { /* implements MouseMotionListener, MouseLi
         return logic.stackEdge(virt, phys);
     }
     
+    public boolean unstackEdge(E virt) {
+        return logic.unstackEdge(virt);
+    }
+    
     public boolean testEdgePathValidity(E virt, List<E> phys) {
         return logic.testEdgePathValidity(virt, phys);
     }

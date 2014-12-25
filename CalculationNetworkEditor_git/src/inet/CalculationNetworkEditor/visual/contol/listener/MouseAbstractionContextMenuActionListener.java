@@ -100,7 +100,7 @@ public class MouseAbstractionContextMenuActionListener<V,E> implements ActionLis
                 if(actVertex != null) {
                     bc.unstackVertex(actVertex);
                 } else if(actEdge != null) {
-                    
+                    bc.unstackEdge(actEdge);
                 }
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown button");
