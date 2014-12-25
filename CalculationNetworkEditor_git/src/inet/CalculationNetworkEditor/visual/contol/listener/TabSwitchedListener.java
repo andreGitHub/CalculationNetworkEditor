@@ -34,6 +34,7 @@ public class TabSwitchedListener<V,E> implements ChangeListener {
         //ToolBox.ToolBox.printStackTrace();
         if(e.getSource() != null && e.getSource() instanceof JTabbedPane) {
             JTabbedPane jtp = (JTabbedPane)e.getSource();
+            editorPane.clearPanel();
             switch (mainJtp.getSelectedIndex()) {
                 case 0: {   // physical
                     Graph<V,E> graphPhys = editorPane.reinitializePhysical();
