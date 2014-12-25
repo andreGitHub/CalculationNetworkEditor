@@ -13,6 +13,7 @@ import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.decorators.EdgeShape;
 import edu.uci.ics.jung.visualization.transform.MutableTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
+import inet.CalculationNetworkEditor.Transformers.EdgeStrokeTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
 import inet.CalculationNetworkEditor.visual.contol.listener.MouseAbstraction;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
@@ -63,6 +64,7 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
         setPreferredSize(edit.getDimensionsVisualizationViewer());
         getRenderContext().setVertexFillPaintTransformer(pVertexPaintTransformer);
         getRenderContext().setEdgeDrawPaintTransformer(edgePaintTransformer);
+        getRenderContext().setEdgeStrokeTransformer(new EdgeStrokeTransformer<E>());
         // visViewPhysical.setGraphMouse(mousePhysical);
     }
     /*
