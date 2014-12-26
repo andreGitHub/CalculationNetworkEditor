@@ -77,16 +77,16 @@ public class StackingEdge<V,E> extends EdgeMap<V, E>{
         while (orderedPhys.size()>orderedPhysSize) {
             orderedPhysSize = orderedPhys.size();
             for(E phy : cPhys) {
-                if(getSource(phy) == tmp) {
+                if(step(tmp, phy) != null) {
                     orderedPhys.add(phy);
                     cPhys.remove(phy);
-                    tmp = getDest(phy);
+                    tmp = step(tmp, phy);
                     break;
                 }
             }
         }
         
-        if(getDest(orderedPhys.get(orderedPhys.size()-1)) == vertices.getStackedTo(getDest(virt))) {
+        if(tmp == vertices.getStackedTo(getDest(virt))) {
             // virt is compleatly projected on phys
             stacked.put(virt, phys);
             return true;

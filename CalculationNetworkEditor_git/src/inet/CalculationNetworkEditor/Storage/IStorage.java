@@ -34,6 +34,7 @@ public interface IStorage<V,E> {
     
     public V getEdgeSource(E e);
     public V getEdgeDest(E e);
+    public V step(V v, E e);
     
     public boolean deleteVertex(V v);
     public boolean deleteEdge(E e);

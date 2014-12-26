@@ -186,4 +186,9 @@ public class Storage<V, E> implements IStorage<V,E> {
     public V getEdgeDest(E e) {
         return edges.getDest(e);
     }
+    
+    @Override
+    public V step(V v, E e){
+        return edges.step(v,e);
+    }
 }

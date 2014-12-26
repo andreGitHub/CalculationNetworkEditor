@@ -92,6 +92,17 @@ public class EdgeMap<V, E> {
         return edges.get(e).getValue();
     }
     
+    V step(V v, E e) {
+        Pair<V,V> p = edges.get(e);
+        if(p.getKey() == v) {
+            return p.getValue();
+        } else if(p.getValue() == v) {
+            return p.getKey();
+        } else {
+            return null;
+        }
+    }
+    
     Collection<Pair<E, Pair<V,V>>> getAllEdgesOfType(IStorage.Type t) {
         Collection<Pair<E, Pair<V,V>>> ret = new LinkedList<Pair<E, Pair<V,V>>>();
         for(E e : edges.keySet()) {

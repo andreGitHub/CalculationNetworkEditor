@@ -346,16 +346,58 @@ public class Logic<V,E> implements ILogic<V, E>{
         }
         
         // test begin / end
-        if(!(   getStackedVertexTo(storage.getEdgeSource(virt)) == storage.getEdgeSource(phys.get(0)) &&
-                getStackedVertexTo(storage.getEdgeDest(virt)) == storage.getEdgeDest(phys.get(phys.size()-1)))) {
-            return false;
+        boolean foundBegin = false;
+        boolean foundEnd = false;
+        for(E e : phys) {
+            V virtSourceStackedTo = getStackedVertexTo(storage.getEdgeSource(virt));
+            V virtDestStackedTo = getStackedVertexTo(storage.getEdgeDest(virt));
+            V eSource = storage.getEdgeSource(e);
+            if(virtSourceStackedTo == eSource || virtDestStackedTo == eSource) {
+                foundBegin = true;
+            }
+            
+            V eDest = storage.getEdgeDest(e);
+            if(virtSourceStackedTo == eDest || virtDestStackedTo == eDest) {
+                foundEnd = true;
+            }
         }
         
-        // test connections
-        for(int i = 0; i<phys.size()-1; i++) {
-            if(storage.getEdgeDest(phys.get(i)) != storage.getEdgeSource(phys.get(i + 1))) {
-                return false;
+        if(!(foundBegin && foundEnd)) {
+            return false;
+        }
+        // there is an edge in phy, whose source vertex is attached to the source vertex of virt and
+        // there is an edge in phy, whose dest   vertex is attached to the dest   vertex of virt
+        
+        
+        
+        // test connections between edges in path
+        // copy edges
+        List<E> copiedEdges = new ArrayList<E>();
+        for(E e : phys) {
+            copiedEdges.add(e);
+        }
+        
+        V act = null;
+        V actNew = getStackedVertexTo(storage.getEdgeSource(virt));
+        E actEdge = null;
+        while(act != actNew && copiedEdges.size()>0) {
+            act = actNew;
+            for(E e : copiedEdges) {
+                if(storage.step(act, e) != null) {
+                    actEdge = e;
+                    actNew = storage.step(act, e);
+                    copiedEdges.remove(e);
+                    break;
+                }
             }
+        }
+        
+        //V actSource = storage.getEdgeSource(actEdge);
+        //V actDest = storage.getEdgeDest(actEdge);
+        V virtDestStackedTo = getStackedVertexTo(storage.getEdgeDest(virt));
+        
+        if(!(copiedEdges.size() == 0 && actNew == virtDestStackedTo)) {
+            return false;
         }
         
         // test loop
@@ -364,7 +406,7 @@ public class Logic<V,E> implements ILogic<V, E>{
                 if(storage.getEdgeSource(phys.get(i)) == storage.getEdgeSource(phys.get(j))) {
                     return false;
                 }
-                if(storage.getEdgeSource(phys.get(i)) == storage.getEdgeDest(phys.get(phys.size()-1))) {
+                if(storage.getEdgeDest(phys.get(i)) == storage.getEdgeDest(phys.get(j))) {
                     return false;
                 }
             }

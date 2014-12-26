@@ -45,7 +45,8 @@ public class EditingPanelsListener<V,E> implements ActionListener{
                     panelResetable.clearPanel();
                 } else if(virtE != null) {
                     // stack edges
-                    if(backendController.testEdgePathValidity(virtE, phyE)) {
+                    boolean validPath = backendController.testEdgePathValidity(virtE, phyE);
+                    if(validPath) {
                         if(backendController.stackEdgeVirtToPhy(virtE, phyE)) {
                             panelResetable.clearPanel();
                         }
