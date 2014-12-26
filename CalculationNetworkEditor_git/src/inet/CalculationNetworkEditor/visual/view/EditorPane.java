@@ -247,7 +247,7 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
     
     private void addContentToStackingEdgePanel(JPanel rightPanel, E e, Collection<E> allPhysicalCol) {
         //caption
-        JLabel caption = new JLabel("Stack: " + e);
+        JLabel caption = new JLabel("Map: " + e);
         caption.setSize(new Dimension(180,20));
         caption.setPreferredSize(new Dimension(180,20));
         rightPanel.add(caption,BorderLayout.NORTH);
@@ -311,7 +311,7 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
         allPhysicalEdgeJCB.setBorder(BorderFactory.createEmptyBorder(10, 0, 0, 0));
         
         // JButton stack
-        JButton stack = new JButton("stack");
+        JButton stack = new JButton("map");
         stack.addActionListener(editingPanelsListener);
         rightPanel.add(stack,BorderLayout.SOUTH);
     }
@@ -379,7 +379,7 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
     
     private void addContentToStackingVertexPanel(JPanel rightPanel, V v, Collection<V> allPhysicalCol) {
         //caption
-        JLabel caption = new JLabel("Stack: " + v);
+        JLabel caption = new JLabel("Map: " + v);
         caption.setSize(new Dimension(180,20));
         caption.setPreferredSize(new Dimension(180,20));
         rightPanel.add(caption,BorderLayout.NORTH);
@@ -406,7 +406,7 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
         allPhysicalVertexJCB.setPreferredSize(new Dimension(180,20));
         
         // JButton stack
-        JButton stack = new JButton("stack");
+        JButton stack = new JButton("map");
         stack.addActionListener(editingPanelsListener);
         rightPanel.add(stack,BorderLayout.SOUTH);
     }

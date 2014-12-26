@@ -88,7 +88,7 @@ public class MouseAbstractionContextMenuActionListener<V,E> implements ActionLis
                     
                     panelResetable.setEditingResourcePanel(null, actEdge, "bandwidth", oldRes);
                 }
-            } else if("stack".equals(jmi.getText())) {
+            } else if("map".equals(jmi.getText())) {
                 //sf = new StackingPanel<V,E>();
                 //panelResetable.setEditingPanel(sf);
                 if(actVertex != null) {
@@ -96,7 +96,7 @@ public class MouseAbstractionContextMenuActionListener<V,E> implements ActionLis
                 } else if(actEdge != null) {
                     panelResetable.setStackingEdgePanel(actEdge, allPhysicalEdge);
                 }
-            } else if("unstack".equals(jmi.getText())) {
+            } else if("unmap".equals(jmi.getText())) {
                 if(actVertex != null) {
                     bc.unstackVertex(actVertex);
                 } else if(actEdge != null) {

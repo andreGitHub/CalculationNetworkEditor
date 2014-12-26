@@ -29,7 +29,7 @@ public class EditingPanelsListener<V,E> implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() instanceof JButton) {
             JButton source = (JButton)e.getSource();
-            if(source.getText().equals("stack")) {
+            if(source.getText().equals("map")) {
                 V virtV = panelResetable.getStackingVertVirt();
                 V phyV = panelResetable.getStackingVertPhy();
                 

@@ -101,12 +101,12 @@ public class MouseAbstraction<V,E> implements MouseMotionListener, MouseListener
             
             if(bc.isStackedToVertex(actVertex)) {
                 // show unstack menu
-                JMenuItem unstack = new JMenuItem("unstack");
+                JMenuItem unstack = new JMenuItem("unmap");
                 unstack.addActionListener(macmal);
                 pop.add(unstack);
             } else {
                 // show stacking menu
-                JMenuItem stack = new JMenuItem("stack");
+                JMenuItem stack = new JMenuItem("map");
                 stack.addActionListener(macmal);
                 pop.add(stack);
             }
@@ -140,12 +140,12 @@ public class MouseAbstraction<V,E> implements MouseMotionListener, MouseListener
             
             if(bc.isStackedToEdge(actEdge)) {
                 // show unstack menu
-                JMenuItem unstack = new JMenuItem("unstack");
+                JMenuItem unstack = new JMenuItem("unmap");
                 unstack.addActionListener(macmal);
                 pop.add(unstack);
             } else {
                 // show stacking menu
-                JMenuItem stack = new JMenuItem("stack");
+                JMenuItem stack = new JMenuItem("map");
                 stack.addActionListener(macmal);
                 pop.add(stack);
             }
