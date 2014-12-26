@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inet.CalculationNetworkEditor_Stacking.visual.control.listener;
+package inet.CalculationNetworkEditor.visual.control.listener;
 
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
 import inet.CalculationNetworkEditor.visual.view.PanelResetable;

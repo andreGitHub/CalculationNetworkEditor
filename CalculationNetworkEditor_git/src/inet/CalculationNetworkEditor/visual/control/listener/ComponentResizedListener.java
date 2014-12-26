@@ -3,10 +3,10 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inet.CalculationNetworkEditor_Stacking.visual.control.listener;
+package inet.CalculationNetworkEditor.visual.control.listener;
 
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
-import inet.CalculationNetworkEditor_Stacking.visual.control.listener.TabSwitchedListener;
+import inet.CalculationNetworkEditor.visual.control.listener.TabSwitchedListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.logging.Level;

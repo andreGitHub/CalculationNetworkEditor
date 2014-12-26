@@ -13,7 +13,7 @@ import edu.uci.ics.jung.visualization.picking.PickedState;
 import edu.uci.ics.jung.visualization.transform.MutableTransformer;
 import inet.CalculationNetworkEditor.Storage.IStorage;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
-import inet.CalculationNetworkEditor_Stacking.visual.control.listener.TabSwitchedListener;
+import inet.CalculationNetworkEditor.visual.control.listener.TabSwitchedListener;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerBoth;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerPhysical;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerVirtual;
