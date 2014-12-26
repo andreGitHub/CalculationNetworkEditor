@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package inet.CalculationNetworkEditor.visual.control.listener;
+package inet.CalculationNetworkEditor_Stacking.visual.control.listener;
 
 import edu.uci.ics.jung.graph.Graph;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;

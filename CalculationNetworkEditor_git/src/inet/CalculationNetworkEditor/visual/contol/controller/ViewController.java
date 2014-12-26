@@ -6,7 +6,6 @@
 package inet.CalculationNetworkEditor.visual.contol.controller;
 
 import edu.uci.ics.jung.algorithms.layout.GraphElementAccessor;
-import edu.uci.ics.jung.algorithms.layout.Layout;
 import edu.uci.ics.jung.visualization.Layer;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.LayoutScalingControl;
@@ -14,18 +13,15 @@ import edu.uci.ics.jung.visualization.picking.PickedState;
 import edu.uci.ics.jung.visualization.transform.MutableTransformer;
 import inet.CalculationNetworkEditor.Storage.IStorage;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
-import inet.CalculationNetworkEditor.visual.control.listener.TabSwitchedListener;
+import inet.CalculationNetworkEditor_Stacking.visual.control.listener.TabSwitchedListener;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerBoth;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerPhysical;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerVirtual;
-import java.awt.Component;
 import java.awt.Point;
 import java.awt.geom.Point2D;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JMenuItem;
-import javax.swing.JPopupMenu;
 
 /**
  *

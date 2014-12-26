@@ -5,7 +5,7 @@
  */
 package inet.CalculationNetworkEditor.visual.view;
 
-import inet.CalculationNetworkEditor.visual.control.listener.ComponentResizedListener;
+import inet.CalculationNetworkEditor_Stacking.visual.control.listener.ComponentResizedListener;
 import edu.uci.ics.jung.graph.Graph;
 import inet.CalculationNetworkEditor.Logic.ILogic;
 import inet.CalculationNetworkEditor.Logic.Logic;
@@ -13,10 +13,10 @@ import inet.CalculationNetworkEditor.Storage.IStorage;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
-import inet.CalculationNetworkEditor.visual.control.listener.TabSwitchedListener;
-import inet.CalculationNetworkEditor.visual.control.listener.MouseAbstraction;
+import inet.CalculationNetworkEditor_Stacking.visual.control.listener.TabSwitchedListener;
+import inet.CalculationNetworkEditor_Stacking.visual.control.listener.MouseAbstraction;
 import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
-import inet.CalculationNetworkEditor.visual.control.listener.EditingPanelsListener;
+import inet.CalculationNetworkEditor_Stacking.visual.control.listener.EditingPanelsListener;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerBoth;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerPhysical;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerVirtual;

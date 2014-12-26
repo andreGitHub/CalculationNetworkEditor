@@ -15,7 +15,7 @@ import edu.uci.ics.jung.visualization.transform.MutableTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgeStrokeTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
-import inet.CalculationNetworkEditor.visual.control.listener.MouseAbstraction;
+import inet.CalculationNetworkEditor_Stacking.visual.control.listener.MouseAbstraction;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
 
 /**
