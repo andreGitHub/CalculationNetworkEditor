@@ -149,7 +149,7 @@ public class Logic<V,E> implements ILogic<V, E>{
     }
 
     @Override
-    public boolean contains(V v) {
+    public boolean containsVertex(V v) {
         return storage.containsVertex(v);
     }
     
@@ -268,12 +268,7 @@ public class Logic<V,E> implements ILogic<V, E>{
         return storage.getEdgeStack(e);
     }
     
-    /**
-     * This method test if a given physical path is valid an can be added to the internal storage structure.
-     * @param virt virtual edge, which is mapped to an physical path.
-     * @param phys physical path
-     * @return true, if the path is valid.
-     */
+    @Override
     public boolean testEdgePathValidity(E virt, List<E> phys) {
         // test null
         if(virt == null || phys == null) {
