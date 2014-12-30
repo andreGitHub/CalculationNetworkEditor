@@ -17,19 +17,32 @@ import java.util.logging.Logger;
 import javafx.util.Pair;
 
 /**
- *
+ * The logic subsystem rest on top of the storage subsystem. It enhance the storage subsystem with some checking capabilities.
+ * 
  * @author andre
  */
 public class Logic<V,E> implements ILogic<V, E>{
     private IStorage<V,E> storage = null;
     private ComposeDecomposeGraph<V,E> cdGraph = null;
     
-    
+    /**
+     * Create a new class.
+     */
     public Logic() {
         storage = new Storage();
         cdGraph = new ComposeDecomposeGraph<V,E>(storage);
     }
     
+    /**
+     * Initialises the class. Add graphs to the storage subsystem, set stacking
+     * vertices and edges and add ressources of vertices and edges.
+     * @param phys list of graphs, which are added to physical.
+     * @param virts list of graphs, which are added to virtual.
+     * @param stackVertex list of Vertex pairs. it specifies, which vertex is tacked to which vertex.
+     * @param stackEdge like vertex pairs, but with edges and paths of edges.
+     * @param vertexRessources list of vertex - double pairs, which specify the ressources of each vertex.
+     * @param edgeRessources like vertex ressources, but with edges
+     */    
     @Override
     public void init(
                     List<Graph<V, E>> phys, List<Graph<V, E>> virts,
@@ -71,44 +84,68 @@ public class Logic<V,E> implements ILogic<V, E>{
         }
     }
     
+    /**
+     * Add list of stacked Vertices to internal storage structure.
+     * @param pStacked List of Vertices, which should be stacked.
+     * @return true if all list entries could be added, otherwise false.
+     */
     private boolean addStackedVertexMap(HashMap<V,V> pStacked) {
+        boolean ret = true;
         for(V virt : pStacked.keySet()) {
             V phy = pStacked.get(virt);
             if(!storage.stackVertex(virt, phy)) {
-                return false;
+                ret = false;
             }
         }
-        return true;
+        return ret;
     }
     
+    /**
+     * Add list of stacked Edges to internal storage structure.
+     * @param pStacked List of Edges, which should be stacked.
+     * @return true if all list entries could be added, otherwise false.
+     */
     public boolean addStackedEdgeMap(HashMap<E,List<E>> pStacked) {
+        boolean ret = true;
         for(E virt : pStacked.keySet()) {
             List<E> path = pStacked.get(virt);
             if(!storage.stackEdge(virt, path)) {
-                return false;
+                ret = false;
             }
         }
-        return true;
+        return ret;
     }
     
+    /**
+     * Add list of Vertex-Ressource - Pairs to internal data structure.
+     * @param pRessources List of vertex-ressource pairs.
+     * @return return true, if all entries can be added.
+     */
     public boolean addVertexRessources(HashMap<V,Double> pRessources){
+        boolean ret = true;
         for(V v : pRessources.keySet()) {
             double res = pRessources.get(v);
             if(!storage.addRessourceToVertex(v, res)) {
-                return false;
+                ret = false;
             }
         }
-        return true;
+        return ret;
     }
     
+    /**
+     * Add list of Edge-Ressource - Pairs to internal data structure.
+     * @param pRessources List of edge-ressource pairs.
+     * @return return true, if all entries can be added.
+     */
     public boolean addEdgeRessources(HashMap<E,Double> pRessources){
+        boolean ret = true;
         for(E e : pRessources.keySet()) {
             double res = pRessources.get(e);
             if(!storage.addRessourceToEdge(e, res)) {
-                return false;
+                ret = false;
             }
         }
-        return true;
+        return ret;
     }
 
     @Override
@@ -231,98 +268,12 @@ public class Logic<V,E> implements ILogic<V, E>{
         return storage.getEdgeStack(e);
     }
     
-    /*
-    @Override
-    public boolean incrementalStackEdge(E e1, E e2) {
-        if(e1 == null || e2 == null) {
-            return false;
-        }
-        
-        E virt = null;
-        E phy = null;
-        
-        if(storage.getTypeOfEdge(e1) == IStorage.Type.VIRTUAL && storage.getTypeOfEdge(e2) == IStorage.Type.PHYSICAL) {
-            virt = e1;
-            phy = e2;
-        } else if(storage.getTypeOfEdge(e1) == IStorage.Type.PHYSICAL && storage.getTypeOfEdge(e2) == IStorage.Type.VIRTUAL) {
-            virt = e2;
-            phy = e1;
-        } else {
-            return false;
-        }
-        
-        if(!storage.containsStackedEdge(virt)) {
-            // add newly
-            List<E> path = new ArrayList<E>();
-            path.add(phy);
-            testPathValidity(path);
-            
-            // test for resources
-            if(storage.getRessourcesOfEdgeLeft(phy) >= storage.getRessourcesOfEdge(virt)) {
-                storage.stackEdge(virt, path);
-                return true;
-            } else {
-                return false;
-            }
-        } else {
-            // increment
-            List<E> path = storage.getStackedEdgePath(virt);
-            E start = path.get(0);
-            E end = path.get(path.size()-1);
-            if( storage.getEdgeDest(phy).equals(storage.getEdgeSource(start)) ) {
-                // phy can stack to the beginning of the path
-                List<E> newPath = new ArrayList<E>();
-                newPath.add(phy);
-                newPath.addAll(path);
-                if(!testPathValidity(path)) {
-                    return false;
-                }
-                storage.stackEdge(virt, newPath);
-            } else if(storage.getEdgeSource(phy).equals(storage.getEdgeDest(end))) {
-                // phy can stack to the end of the path
-                path.add(phy);
-                if(!testPathValidity(path)) {
-                    path.remove(phy);
-                }
-            }
-        }
-        return true;
-    }
-    
-    private boolean testPathValidity(List<E> path) {
-        if(path.size() == 1) {
-            if(storage.getEdgeSource(path.get(0)).equals(storage.getEdgeDest(path.get(0)))) {
-                // one edge - loop
-                return false;
-            }
-        } else if(path.size()>1) {
-            E end = path.get(path.size()-1);
-            // test connections
-            for(E e : path) {
-                if(e != end) {
-                    if(!storage.getEdgeDest(e).equals(storage.getEdgeSource(path.get(path.indexOf(e)+1)))) {
-                        return false;
-                    }
-                }
-            }
-        }
-        
-        // test loop
-        for(E e1 : path) {
-            for(E e2 : path) {
-                if(!e1.equals(e2)) {
-                    if( storage.getEdgeSource(e1).equals(storage.getEdgeSource(e2)) ||
-                        storage.getEdgeDest(e1).equals(storage.getEdgeDest(e2))) {
-                        return false;
-                    }
-                }
-            }
-        }
-        
-        return true;
-    }
-    */
-    
+    /**
+     * This method test if a given physical path is valid an can be added to the internal storage structure.
+     * @param virt virtual edge, which is mapped to an physical path.
+     * @param phys physical path
+     * @return true, if the path is valid.
+     */
     public boolean testEdgePathValidity(E virt, List<E> phys) {
         // test null
         if(virt == null || phys == null) {
