@@ -60,7 +60,7 @@ public class VertexPaintTransformer<V,E> implements Transformer<V, Paint>{
     
     @Override
     public Paint transform(V v) {
-        if(!logic.contains(v)) {
+        if(!logic.containsVertex(v)) {
             System.out.println("logic does not contain: " + v);
             return null;
         }

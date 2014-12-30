@@ -129,11 +129,11 @@ public class EdgeMap<V, E> {
     
     double getRessourcesOfEdge(E e) {
         if(!edges.containsKey(e)) {
-            return -1.0d;
+            return 0.0d;
         }
         
         if(!resources.containsKey(e)) {
-            return -1.0d;
+            return 0.0d;
         }
         
         return resources.get(e);

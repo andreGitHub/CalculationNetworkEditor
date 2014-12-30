@@ -464,7 +464,7 @@ public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
         add(rightPanel, BorderLayout.LINE_END);
-        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 500, 10));
+        rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
         

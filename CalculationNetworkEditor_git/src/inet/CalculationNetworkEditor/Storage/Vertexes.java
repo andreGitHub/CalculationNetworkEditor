@@ -84,14 +84,14 @@ public class Vertexes<V> {
     
     double getRessourcesOfVertex(V v) {
         if(v == null) {
-            return -1.0d;
+            return 0.0d;
         }
         if(!vertexes.containsKey(v)) {
-            return -1.0d;
+            return 0.0d;
         }
         
         if(!ressources.containsKey(v)) {
-            return -1.0d;
+            return 0.0d;
         }
         
         return ressources.get(v);
