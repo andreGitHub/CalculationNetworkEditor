@@ -81,7 +81,7 @@ public class ViewController<V,E> {
     }
     
     public void zoom(double zooming) {
-        System.out.println("#vertex: " + visViewerPhysical.getGraphLayout().getGraph().getVertexCount());
+        //System.out.println("#vertex: " + visViewerPhysical.getGraphLayout().getGraph().getVertexCount());
         
         switch(edit.getActualTab()) {
             case 0: { // physical
@@ -115,7 +115,6 @@ public class ViewController<V,E> {
                 layout.translate(x/visViewerPhysical.getScaleFactor(), y/visViewerPhysical.getScaleFactor());
                 // found in: EditingGraphMousePlugin
                 // layout.setLocation(newVertex, vv.getRenderContext().getMultiLayerTransformer().inverseTransform(e.getPoint()));
-                System.out.println(visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(100,100)));
             } break;
             case 1: {
                 MutableTransformer layout = visViewerVirtual.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT);
@@ -365,9 +364,8 @@ public class ViewController<V,E> {
             V vertex = (V)selected.toArray()[0];
             
             
-            System.out.println(visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)));
-            double x = visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)).getX();
-            double y = visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)).getY();
+            double x = visView.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)).getX();
+            double y = visView.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)).getY();
             
             MutableTransformer viewTransformer = visView.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT);
             
