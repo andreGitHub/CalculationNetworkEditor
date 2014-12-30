@@ -364,7 +364,17 @@ public class ViewController<V,E> {
             Set<V> selected = pickedVertexState.getPicked();
             V vertex = (V)selected.toArray()[0];
             
-            visView.getGraphLayout().setLocation(vertex, p);
+            
+            System.out.println(visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)));
+            double x = visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)).getX();
+            double y = visViewerPhysical.getRenderContext().getMultiLayerTransformer().transform(new Point(0,0)).getY();
+            
+            MutableTransformer viewTransformer = visView.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT);
+            
+            Point p2 = new Point((int)((p.getX()-x)/viewTransformer.getScale()), (int)((p.getY()-y)/viewTransformer.getScale()));
+            
+            visView.getGraphLayout().setLocation(vertex, p2);
+            //visView.getGraphLayout().setLocation(vertex, p);
         }
     }
     
