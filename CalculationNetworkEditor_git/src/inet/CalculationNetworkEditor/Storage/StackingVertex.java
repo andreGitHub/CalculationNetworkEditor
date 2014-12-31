@@ -66,7 +66,9 @@ public class StackingVertex<V> extends Vertexes<V>{
                     t2 == IStorage.Type.PHYSICAL &&
                     !stacked.containsKey(v1)) {
                         // test Ressources
-            if(getRessourcesOfVertexLeft(v2) >= getRessourcesOfVertex(v1)) {
+            double resV2 = getRessourcesOfVertexLeft(v2);
+            double resV1 = getRessourcesOfVertex(v1);
+            if(resV2 >= resV1) {
                 // stack
                 stacked.put(v1, v2);
                 return true;
@@ -81,13 +83,13 @@ public class StackingVertex<V> extends Vertexes<V>{
     
     double getRessourcesOfVertexLeft(V phy) {
         if(phy == null) {
-            return -1.0d;
+            return 0.0d;
         }
         if(getType(phy) != IStorage.Type.PHYSICAL) {
-            return -1.0d;
+            return 0.0d;
         }
         if(!contains(phy) || !containsRessources(phy)) {
-            return -1.0d;
+            return 0.0d;
         }
         
         Collection<V> stack = getAllStackedVertexesOfVertex(phy);
