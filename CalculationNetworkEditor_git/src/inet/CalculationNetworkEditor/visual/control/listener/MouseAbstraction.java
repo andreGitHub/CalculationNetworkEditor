@@ -8,7 +8,7 @@ package inet.CalculationNetworkEditor.visual.control.listener;
 import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
 import inet.CalculationNetworkEditor.Storage.IStorage;
-import inet.CalculationNetworkEditor.visual.view.PanelResetable;
+import inet.CalculationNetworkEditor.visual.view.IPanelResetable;
 import java.awt.Component;
 import java.awt.Point;
 import java.awt.event.MouseEvent;
@@ -48,11 +48,11 @@ public class MouseAbstraction<V,E> implements MouseMotionListener, MouseListener
     private BackendController<V,E> bc = null;
     private ViewController<V,E> vc = null;
     
-    private PanelResetable<V,E> panelResetable = null;
+    private IPanelResetable<V,E> panelResetable = null;
     
     MouseAbstractionContextMenuActionListener macmal = null;
     
-    public MouseAbstraction(ViewController<V,E> pVC, BackendController<V,E> pBC, PanelResetable<V,E> pPanelResetable) {
+    public MouseAbstraction(ViewController<V,E> pVC, BackendController<V,E> pBC, IPanelResetable<V,E> pPanelResetable) {
         vc = pVC;
         bc = pBC;
         
@@ -236,6 +236,7 @@ public class MouseAbstraction<V,E> implements MouseMotionListener, MouseListener
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        System.out.println("mouse clicked");
         if(e.getButton() == MouseEvent.BUTTON1) {
             // add vertex or select vertex/edge
             if(vc.isElementAt(e.getPoint())) {

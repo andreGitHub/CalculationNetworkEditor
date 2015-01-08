@@ -6,7 +6,7 @@
 package inet.CalculationNetworkEditor.visual.control.listener;
 
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
-import inet.CalculationNetworkEditor.visual.view.PanelResetable;
+import inet.CalculationNetworkEditor.visual.view.IPanelResetable;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.List;
@@ -17,10 +17,10 @@ import javax.swing.JButton;
  * @author andre
  */
 public class EditingPanelsListener<V,E> implements ActionListener{
-    private PanelResetable<V,E> panelResetable = null;
+    private IPanelResetable<V,E> panelResetable = null;
     private BackendController<V,E> backendController = null;
     
-    public EditingPanelsListener(PanelResetable<V,E> pPanelResetable, BackendController<V,E> pBC) {
+    public EditingPanelsListener(IPanelResetable<V,E> pPanelResetable, BackendController<V,E> pBC) {
         panelResetable = pPanelResetable;
         backendController = pBC;
     }

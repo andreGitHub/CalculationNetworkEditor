@@ -177,6 +177,9 @@ public class Logic<V,E> implements ILogic<V, E>{
     
     @Override
     public boolean addEdge(E e, V v1, V v2) {
+        if(e == null || v1 == null || v2 == null) {
+            return false;
+        }
         if(v1.equals(v2)) {
             return false;
         } else {

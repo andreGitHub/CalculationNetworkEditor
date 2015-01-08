@@ -41,7 +41,7 @@ import org.apache.commons.collections15.Factory;
  *
  * @author andre
  */
-public class EditorPane<V,E> extends JPanel implements PanelResetable<V,E> {
+public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
 /*
     public enum View {PHYSICAL, VIRTUAL, BOTH};
     private View view = View.PHYSICAL;

@@ -12,7 +12,7 @@ import java.util.List;
  *
  * @author andre
  */
-public interface PanelResetable<V,E> {
+public interface IPanelResetable<V,E> {
     public void setStackingEdgePanel(E e, Collection<E> allPhysical);
     public void setStackingEdgeActualStackToEdge(E e);
     public void addStackingEdgePhyToPath();

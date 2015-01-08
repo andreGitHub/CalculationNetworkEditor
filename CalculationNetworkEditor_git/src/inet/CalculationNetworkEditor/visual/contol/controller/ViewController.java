@@ -6,6 +6,7 @@
 package inet.CalculationNetworkEditor.visual.contol.controller;
 
 import edu.uci.ics.jung.algorithms.layout.GraphElementAccessor;
+import edu.uci.ics.jung.algorithms.layout.RadiusGraphElementAccessor;
 import edu.uci.ics.jung.visualization.Layer;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.LayoutScalingControl;
@@ -89,21 +90,24 @@ public class ViewController<V,E> {
                 LayoutScalingControl lsc = new LayoutScalingControl();
                 lsc.scale(visViewerPhysical, (float)zooming, visViewerPhysical.getCenter());
                 visViewerPhysical.scaleToLayout(lsc);
+                visViewerPhysical.zoom();
             } break;
             case 1: { // virtual
                 //visViewerVirtual.setZoomFactorVirtual(visViewerVirtual.getZoomFactorVirtual() * zooming);
                 LayoutScalingControl lsc = new LayoutScalingControl();
                 lsc.scale(visViewerVirtual, (float)zooming, visViewerVirtual.getCenter());
                 visViewerVirtual.scaleToLayout(lsc);
+                visViewerVirtual.zoom();
             } break;
             case 2: { // both
                 //visViewerBoth.setZoomFactorBoth(visViewerBoth.getZoomFactorBoth() * zooming);
                 LayoutScalingControl lsc = new LayoutScalingControl();
                 lsc.scale(visViewerBoth, (float)zooming, visViewerBoth.getCenter());
                 visViewerBoth.scaleToLayout(lsc);
+                visViewerBoth.zoom();
             } break;
             default: { // unknown
-                Logger.getLogger(TabSwitchedListener.class.getName()).log(Level.SEVERE, "unknown view type");
+                Logger.getLogger(ViewController.class.getName()).log(Level.SEVERE, "unknown view type");
             }
         }
     }
@@ -128,6 +132,15 @@ public class ViewController<V,E> {
                 Logger.getLogger(TabSwitchedListener.class.getName()).log(Level.SEVERE, "unknown view type");
             }
         }
+    }
+    
+    Point getPointAtLayout(Point p) {
+        MutableTransformer layout = visViewerPhysical.getRenderContext().getMultiLayerTransformer().getTransformer(Layer.LAYOUT);
+        System.out.println("x: " + layout.getTranslateX() + " y: " + layout.getTranslateY());
+        System.out.println("x(p): " + p.getX() + " y(p): " + p.getY());
+        p.setLocation(p.getX()-layout.getTranslateX(), p.getY()-layout.getTranslateY());
+        System.out.println("x(p): " + p.getX() + " y(p): " + p.getY());
+        return p;
     }
     
     public void addVertex(Point2D p, V v) {
@@ -201,20 +214,23 @@ public class ViewController<V,E> {
     */
     public boolean isElementAt(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
-        V vertex = pickSupport.getVertex(visView.getModel().getGraphLayout(), p.getX(), p.getY());
-        E edge = pickSupport.getEdge(visView.getModel().getGraphLayout(), p.getX(), p.getY());
+        V vertex = pickSupport.getVertex(visView.getGraphLayout(), p.getX(), p.getY());        
+        E edge = pickSupport.getEdge(visView.getGraphLayout(), p.getX(), p.getY());
+        
         
         if(vertex != null || edge != null) {
             return true;
-        } else {
-            return false;
         }
+        
+        return false;
     }
     
     public boolean selectElementAt(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
         V vertex = pickSupport.getVertex(visView.getGraphLayout(), p.getX(), p.getY());
@@ -249,6 +265,7 @@ public class ViewController<V,E> {
     
     public boolean isSelected(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
         V vertex = pickSupport.getVertex(visView.getGraphLayout(), p.getX(), p.getY());
@@ -274,6 +291,7 @@ public class ViewController<V,E> {
     
     public boolean elementAtPositionIsVertex(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
         V vertex = pickSupport.getVertex(visView.getGraphLayout(), p.getX(), p.getY());
@@ -287,6 +305,7 @@ public class ViewController<V,E> {
     
     public boolean elementAtPositionIsEdge(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
         E edge = pickSupport.getEdge(visView.getGraphLayout(), p.getX(), p.getY());
@@ -300,6 +319,7 @@ public class ViewController<V,E> {
     
     public V getVertexAtPoint(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
         V vertex = pickSupport.getVertex(visView.getGraphLayout(), p.getX(), p.getY());
@@ -309,6 +329,7 @@ public class ViewController<V,E> {
     
     public E getEdgeAtPoint(Point p) {
         VisualizationViewer<V,E> visView = getActualVisualizationViewer();
+        //p = getPointAtLayout(p);
         
         GraphElementAccessor<V,E> pickSupport = visView.getPickSupport();
         E edge = pickSupport.getEdge(visView.getGraphLayout(), p.getX(), p.getY());
@@ -357,7 +378,8 @@ public class ViewController<V,E> {
     public void relocateSelectedVertex(Point p) {
         if(selectedElementIsVertex()) {
             VisualizationViewer<V,E> visView = getActualVisualizationViewer();
-        
+            
+            
             PickedState<V> pickedVertexState = visView.getPickedVertexState();
             
             Set<V> selected = pickedVertexState.getPicked();

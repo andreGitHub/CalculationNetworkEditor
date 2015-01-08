@@ -8,7 +8,7 @@ package inet.CalculationNetworkEditor.visual.control.listener;
 import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
 import inet.CalculationNetworkEditor.Storage.IStorage;
-import inet.CalculationNetworkEditor.visual.view.PanelResetable;
+import inet.CalculationNetworkEditor.visual.view.IPanelResetable;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +25,7 @@ import javax.swing.JOptionPane;
 public class MouseAbstractionContextMenuActionListener<V,E> implements ActionListener {
     private BackendController<V,E> bc = null;
     private ViewController<V,E> vc = null;
-    private PanelResetable<V,E> panelResetable = null;
+    private IPanelResetable<V,E> panelResetable = null;
     
     private V actVertex = null;
     private Collection<V> allPhysicalVertex = null;
@@ -34,7 +34,7 @@ public class MouseAbstractionContextMenuActionListener<V,E> implements ActionLis
     private E actEdge = null;
     private Collection<E> allPhysicalEdge = null;
      
-    public MouseAbstractionContextMenuActionListener(BackendController<V,E> pBc, ViewController<V,E> pVc, PanelResetable<V,E> pResetable) {
+    public MouseAbstractionContextMenuActionListener(BackendController<V,E> pBc, ViewController<V,E> pVc, IPanelResetable<V,E> pResetable) {
         bc = pBc;
         vc = pVc;
         
