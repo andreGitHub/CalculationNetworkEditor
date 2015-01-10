@@ -27,7 +27,7 @@ import org.apache.commons.collections15.Transformer;
  */
 public class VertexPaintTransformer<V,E> implements Transformer<V, Paint>{
 
-    private ILogic<V,E> logic = null;
+    protected ILogic<V,E> logic = null;
     private Paint colorPhysical = new Color(129, 0, 0); // red wine
     private Paint colorVirtual = new Color(0, 129, 9); // lime green
     
@@ -39,7 +39,7 @@ public class VertexPaintTransformer<V,E> implements Transformer<V, Paint>{
     private VisualizationViewerVirtual<V,E> vvVirtual = null;
     private VisualizationViewerBoth<V,E> vvBoth = null;
     
-    private JTabbedPane jtp = null;
+    protected JTabbedPane jtp = null;
     
     public VertexPaintTransformer(
                 ILogic<V,E> pLogic,
@@ -58,6 +58,12 @@ public class VertexPaintTransformer<V,E> implements Transformer<V, Paint>{
         vvBoth = pVvBoth;
     }
     
+    /**
+     * This method return the color of the vertex, which is schown on the screen.
+     * It distinguish between selected views.
+     * @param v vertex of interest
+     * @return color of v
+     */
     @Override
     public Paint transform(V v) {
         if(!logic.containsVertex(v)) {

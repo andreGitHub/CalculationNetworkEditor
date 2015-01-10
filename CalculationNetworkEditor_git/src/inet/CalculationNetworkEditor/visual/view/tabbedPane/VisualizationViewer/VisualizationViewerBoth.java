@@ -16,6 +16,8 @@ import edu.uci.ics.jung.visualization.transform.MutableTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgeStrokeTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
+import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformerStacking;
+import inet.CalculationNetworkEditor.Transformers.VertexStrokeTransformer;
 import inet.CalculationNetworkEditor.visual.control.listener.MouseAbstraction;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
 
@@ -27,6 +29,8 @@ public class VisualizationViewerBoth<V,E> extends VisualizationViewer<V, E> {
     private Graph<V,E> graph = null;
     private Layout<V,E> layout = null;
     private VertexPaintTransformer<V,E> vertexPaintTransformer = null;
+    private VertexPaintTransformerStacking<V,E> vertexPaintTransformerStacking = null;
+    private VertexStrokeTransformer<V> vertexStroketransformer = null;
     private EdgePaintTransformer<V,E> edgePaintTransformer = null;
     private MouseAbstraction<V,E> mouse = null;
     
@@ -38,6 +42,7 @@ public class VisualizationViewerBoth<V,E> extends VisualizationViewer<V, E> {
     public VisualizationViewerBoth(
                 Graph<V,E> pGraph, 
                 VertexPaintTransformer<V,E> pVertexPaintTransformer, 
+                VertexPaintTransformerStacking<V,E> pVertexPaintTransformerStacking,
                 EdgePaintTransformer<V,E> pEdgePaintTransformer,
                 EditorPane<V,E> pEdit) {
         super(new CircleLayout<V,E>(pGraph));
@@ -49,6 +54,8 @@ public class VisualizationViewerBoth<V,E> extends VisualizationViewer<V, E> {
         
         graph = pGraph;
         vertexPaintTransformer = pVertexPaintTransformer;
+        vertexPaintTransformerStacking = pVertexPaintTransformerStacking;
+        vertexStroketransformer = new VertexStrokeTransformer<V>();
         edgePaintTransformer = pEdgePaintTransformer;
         
         edit = pEdit;
@@ -60,7 +67,9 @@ public class VisualizationViewerBoth<V,E> extends VisualizationViewer<V, E> {
         // mousePhysical.setMode(ModalGraphMouse.Mode.PICKING);
         setSize(edit.getDimensionsVisualizationViewer());
         setPreferredSize(edit.getDimensionsVisualizationViewer());
-        getRenderContext().setVertexFillPaintTransformer(pVertexPaintTransformer);
+        getRenderContext().setVertexFillPaintTransformer(vertexPaintTransformerStacking);
+        getRenderContext().setVertexDrawPaintTransformer(vertexPaintTransformer);
+        getRenderContext().setVertexStrokeTransformer(vertexStroketransformer);
         getRenderContext().setEdgeDrawPaintTransformer(edgePaintTransformer);
         getRenderContext().setEdgeStrokeTransformer(new EdgeStrokeTransformer<E>());
         // visViewPhysical.setGraphMouse(mousePhysical);
@@ -104,7 +113,7 @@ public class VisualizationViewerBoth<V,E> extends VisualizationViewer<V, E> {
         setGraphLayout(layout);
         setSize(edit.getDimensionsVisualizationViewer());
         setPreferredSize(edit.getDimensionsVisualizationViewer());
-        getRenderContext().setVertexFillPaintTransformer(vertexPaintTransformer);
+        getRenderContext().setVertexFillPaintTransformer(vertexPaintTransformerStacking);
         //mousePhysical = new EditingModalGraphMouse(visViewPhysical.getRenderContext(), vertexFactory, edgeFactory);
         //mousePhysical.setMode(ModalGraphMouse.Mode.PICKING);
         //visViewPhysical.setGraphMouse(mousePhysical);

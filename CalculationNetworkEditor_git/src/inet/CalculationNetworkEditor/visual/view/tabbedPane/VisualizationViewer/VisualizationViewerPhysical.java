@@ -16,6 +16,7 @@ import edu.uci.ics.jung.visualization.transform.MutableTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.EdgeStrokeTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
+import inet.CalculationNetworkEditor.Transformers.VertexStrokeTransformer;
 import inet.CalculationNetworkEditor.visual.control.listener.MouseAbstraction;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
 
@@ -30,7 +31,9 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
     //private VisualizationViewer<V,E> visViewer = null;
     
     private VertexPaintTransformer<V,E> vertexPaintTransformer= null;
+    private VertexStrokeTransformer<V> vertexStrokeTransformer = null;
     private EdgePaintTransformer<V,E> edgePaintTransformer = null;
+    private EdgeStrokeTransformer<E> edgeStrokeTransformer = null;
     private MouseAbstraction<V,E> mouse = null;
     
     private EditorPane<V,E> edit = null;
@@ -55,7 +58,9 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
         
         graph = pGraph;
         vertexPaintTransformer = pVertexPaintTransformer;
+        vertexStrokeTransformer = new VertexStrokeTransformer<V>();
         edgePaintTransformer = pEdgePaintTransformer;
+        edgeStrokeTransformer = new EdgeStrokeTransformer<E>();
         
         edit = pEdit;
         
@@ -66,9 +71,11 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
         // mousePhysical.setMode(ModalGraphMouse.Mode.PICKING);
         setSize(edit.getDimensionsVisualizationViewer());
         setPreferredSize(edit.getDimensionsVisualizationViewer());
-        getRenderContext().setVertexFillPaintTransformer(pVertexPaintTransformer);
+        getRenderContext().setVertexFillPaintTransformer(vertexPaintTransformer);
+        getRenderContext().setVertexDrawPaintTransformer(vertexPaintTransformer);
+        getRenderContext().setVertexStrokeTransformer(vertexStrokeTransformer);
         getRenderContext().setEdgeDrawPaintTransformer(edgePaintTransformer);
-        getRenderContext().setEdgeStrokeTransformer(new EdgeStrokeTransformer<E>());
+        getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
         // visViewPhysical.setGraphMouse(mousePhysical);
     }
     /*

@@ -12,6 +12,7 @@ import inet.CalculationNetworkEditor.Logic.Logic;
 import inet.CalculationNetworkEditor.Storage.IStorage;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
+import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformerStacking;
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
 import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
 import inet.CalculationNetworkEditor.visual.control.listener.BothGraphActions;
@@ -60,6 +61,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
     private VisualizationViewerBoth<V, E> visViewBoth = null;
 
     private VertexPaintTransformer<V,E> vertexPaintTransformer = null;
+    private VertexPaintTransformerStacking<V,E> vertexPaintTransformerStacking = null;
     private EdgePaintTransformer<V,E> edgePaintTransformer = null;
     
     private MouseAbstraction<V,E> mouseAbstraction = null;
@@ -118,6 +120,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         
         
         vertexPaintTransformer = new VertexPaintTransformer<V,E>(logic, tabbedPane);
+        vertexPaintTransformerStacking = new VertexPaintTransformerStacking<V,E>(logic,tabbedPane);
         edgePaintTransformer = new EdgePaintTransformer<V,E>(logic, tabbedPane);
         
         // init VisualisationViewer
@@ -133,7 +136,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         
         visViewBoth = new VisualizationViewerBoth<V,E>(
                         logic.getDisplay(null),
-                        vertexPaintTransformer, edgePaintTransformer,
+                        vertexPaintTransformer, vertexPaintTransformerStacking, edgePaintTransformer,
                         this);
         
         vc = new ViewController<V,E>(this, visViewPhysical, visViewVirtual, visViewBoth);
@@ -155,6 +158,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         */
         
         vertexPaintTransformer.setVisualizationViewers(visViewPhysical, visViewVirtual, visViewBoth);
+        vertexPaintTransformerStacking.setVisualizationViewers(visViewPhysical, visViewVirtual, visViewBoth);
         edgePaintTransformer.setVisualizationViewers(visViewPhysical, visViewVirtual, visViewBoth);
         
         /*
