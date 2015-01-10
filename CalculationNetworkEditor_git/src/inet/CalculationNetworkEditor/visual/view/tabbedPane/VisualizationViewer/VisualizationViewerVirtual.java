@@ -42,6 +42,9 @@ public class VisualizationViewerVirtual<V,E> extends VisualizationViewer<V, E>{
                 EditorPane<V,E> pEdit) {
         super(new CircleLayout<V,E>(pGraph));
         
+        float pickSize = ((ShapePickSupport<V,E>)getPickSupport()).getPickSize();
+        ((ShapePickSupport<V,E>)getPickSupport()).setPickSize(pickSize+5);
+        
         getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<V,E>());
         
         graph = pGraph;

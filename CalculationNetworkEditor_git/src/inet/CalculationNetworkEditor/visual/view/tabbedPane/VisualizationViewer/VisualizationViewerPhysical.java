@@ -7,7 +7,6 @@ package inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer
 
 import edu.uci.ics.jung.algorithms.layout.CircleLayout;
 import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.algorithms.layout.RadiusGraphElementAccessor;
 import edu.uci.ics.jung.graph.Graph;
 import edu.uci.ics.jung.visualization.Layer;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
@@ -49,7 +48,8 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
         super(new CircleLayout<V,E>(pGraph));
         //visViewer = vv;
         
-        zoom();
+        float pickSize = ((ShapePickSupport<V,E>)getPickSupport()).getPickSize();
+        ((ShapePickSupport<V,E>)getPickSupport()).setPickSize(pickSize+5);
         
         getRenderContext().setEdgeShapeTransformer(new EdgeShape.Line<V,E>());
         
@@ -87,9 +87,12 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
     }
     
     public void zoom() {
-        System.out.println("scale factor: " + getScaleFactor() + " select factor: " + 3.0d/getScaleFactor());
+        /*
         float pickSize = ((ShapePickSupport<V,E>)getPickSupport()).getPickSize();
-        ((ShapePickSupport<V,E>)getPickSupport()).setPickSize(pickSize*2);
+        pickSize = (float)(pickSize * getScaleFactor());
+        System.out.println("scale factor: " + getScaleFactor() + " pick size: " + pickSize);
+        ((ShapePickSupport<V,E>)getPickSupport()).setPickSize(pickSize);
+        */
     }
     
     public void setMouseAbstraction(MouseAbstraction<V,E> pMouse) {
