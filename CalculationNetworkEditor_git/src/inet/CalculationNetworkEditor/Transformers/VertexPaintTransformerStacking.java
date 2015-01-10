@@ -51,7 +51,7 @@ public class VertexPaintTransformerStacking<V, E> extends VertexPaintTransformer
                 } else {
                     Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown vertex type");
                 }
-            }
+            } break;
             default: {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown view");
             }

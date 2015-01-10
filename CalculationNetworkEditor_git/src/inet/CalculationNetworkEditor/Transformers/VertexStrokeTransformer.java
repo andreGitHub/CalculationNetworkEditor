@@ -14,7 +14,7 @@ import org.apache.commons.collections15.Transformer;
  * @author andre
  */
 public class VertexStrokeTransformer<V> implements Transformer<V, Stroke>{
-    float dash[] = { 10.0f };
+    private float dash[] = { 10.0f };
     
     @Override
     public Stroke transform(V i) {

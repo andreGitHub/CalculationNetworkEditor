@@ -33,7 +33,7 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
     private VertexPaintTransformer<V,E> vertexPaintTransformer= null;
     private VertexStrokeTransformer<V> vertexStrokeTransformer = null;
     private EdgePaintTransformer<V,E> edgePaintTransformer = null;
-    private EdgeStrokeTransformer<E> edgeStrokeTransformer = null;
+    private EdgeStrokeTransformer<V,E> edgeStrokeTransformer = null;
     private MouseAbstraction<V,E> mouse = null;
     
     private EditorPane<V,E> edit = null;
@@ -47,6 +47,7 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
                 Graph<V,E> pGraph, 
                 VertexPaintTransformer<V,E> pVertexPaintTransformer, 
                 EdgePaintTransformer<V,E> pEdgePaintTransformer, 
+                EdgeStrokeTransformer<V,E> pEdgeStrokeTransformer,
                 EditorPane<V,E> pEdit) {
         super(new CircleLayout<V,E>(pGraph));
         //visViewer = vv;
@@ -60,7 +61,7 @@ public class VisualizationViewerPhysical<V,E> extends VisualizationViewer<V,E> {
         vertexPaintTransformer = pVertexPaintTransformer;
         vertexStrokeTransformer = new VertexStrokeTransformer<V>();
         edgePaintTransformer = pEdgePaintTransformer;
-        edgeStrokeTransformer = new EdgeStrokeTransformer<E>();
+        edgeStrokeTransformer = pEdgeStrokeTransformer;
         
         edit = pEdit;
         

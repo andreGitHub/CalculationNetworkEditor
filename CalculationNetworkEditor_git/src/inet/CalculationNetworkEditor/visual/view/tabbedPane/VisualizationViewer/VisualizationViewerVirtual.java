@@ -30,6 +30,7 @@ public class VisualizationViewerVirtual<V,E> extends VisualizationViewer<V, E>{
     private VertexPaintTransformer<V,E> vertexPaintTransformer= null;
     private VertexStrokeTransformer<V> vertexStrokeTransformer = null;
     private EdgePaintTransformer<V,E> edgePaintTransformer = null;
+    private EdgeStrokeTransformer<V,E> edgeStrokeTransformer = null;
     private MouseAbstraction<V,E> mouse = null;
     
     private EditorPane<V,E> edit = null;
@@ -40,7 +41,8 @@ public class VisualizationViewerVirtual<V,E> extends VisualizationViewer<V, E>{
     public VisualizationViewerVirtual(
                 Graph<V,E> pGraph, 
                 VertexPaintTransformer<V,E> pVertexPaintTransformer, 
-                EdgePaintTransformer<V,E> pEdgePaintTransformer, 
+                EdgePaintTransformer<V,E> pEdgePaintTransformer,
+                EdgeStrokeTransformer<V,E> pEdgeStrokeTransformer,
                 EditorPane<V,E> pEdit) {
         super(new CircleLayout<V,E>(pGraph));
         
@@ -53,6 +55,7 @@ public class VisualizationViewerVirtual<V,E> extends VisualizationViewer<V, E>{
         vertexPaintTransformer = pVertexPaintTransformer;
         vertexStrokeTransformer = new VertexStrokeTransformer<V>();
         edgePaintTransformer = pEdgePaintTransformer;
+        edgeStrokeTransformer = pEdgeStrokeTransformer;
         
         edit = pEdit;
         
@@ -67,7 +70,7 @@ public class VisualizationViewerVirtual<V,E> extends VisualizationViewer<V, E>{
         getRenderContext().setVertexDrawPaintTransformer(vertexPaintTransformer);
         getRenderContext().setVertexStrokeTransformer(vertexStrokeTransformer);
         getRenderContext().setEdgeDrawPaintTransformer(edgePaintTransformer);
-        getRenderContext().setEdgeStrokeTransformer(new EdgeStrokeTransformer<E>());
+        getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
         // visViewPhysical.setGraphMouse(mousePhysical);
         //// addChangeListener(interactions);
     }

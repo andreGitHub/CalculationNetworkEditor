@@ -11,6 +11,7 @@ import inet.CalculationNetworkEditor.Logic.ILogic;
 import inet.CalculationNetworkEditor.Logic.Logic;
 import inet.CalculationNetworkEditor.Storage.IStorage;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
+import inet.CalculationNetworkEditor.Transformers.EdgeStrokeTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformerStacking;
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
@@ -63,6 +64,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
     private VertexPaintTransformer<V,E> vertexPaintTransformer = null;
     private VertexPaintTransformerStacking<V,E> vertexPaintTransformerStacking = null;
     private EdgePaintTransformer<V,E> edgePaintTransformer = null;
+    private EdgeStrokeTransformer<V,E> edgeStrokeTransformer = null;
     
     private MouseAbstraction<V,E> mouseAbstraction = null;
     private EditingPanelsListener<V,E> editingPanelsListener = null;
@@ -122,21 +124,22 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         vertexPaintTransformer = new VertexPaintTransformer<V,E>(logic, tabbedPane);
         vertexPaintTransformerStacking = new VertexPaintTransformerStacking<V,E>(logic,tabbedPane);
         edgePaintTransformer = new EdgePaintTransformer<V,E>(logic, tabbedPane);
+        edgeStrokeTransformer = new EdgeStrokeTransformer<V,E>(logic, tabbedPane);
         
         // init VisualisationViewer
         visViewPhysical = new VisualizationViewerPhysical<V,E>(
                         logic.getDisplay(IStorage.Type.PHYSICAL),
-                        vertexPaintTransformer, edgePaintTransformer,
+                        vertexPaintTransformer, edgePaintTransformer, edgeStrokeTransformer,
                         this);
         
         visViewVirtual = new VisualizationViewerVirtual<V,E>(
                         logic.getDisplay(IStorage.Type.VIRTUAL),
-                        vertexPaintTransformer, edgePaintTransformer,
+                        vertexPaintTransformer, edgePaintTransformer, edgeStrokeTransformer,
                         this);
         
         visViewBoth = new VisualizationViewerBoth<V,E>(
                         logic.getDisplay(null),
-                        vertexPaintTransformer, vertexPaintTransformerStacking, edgePaintTransformer,
+                        vertexPaintTransformer, vertexPaintTransformerStacking, edgePaintTransformer, edgeStrokeTransformer,
                         this);
         
         vc = new ViewController<V,E>(this, visViewPhysical, visViewVirtual, visViewBoth);
