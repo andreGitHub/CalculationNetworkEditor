@@ -7,6 +7,7 @@ package inet.CalculationNetworkEditor.visual.control.listener;
 
 import edu.uci.ics.jung.graph.Graph;
 import inet.CalculationNetworkEditor.visual.view.EditorPane;
+import inet.CalculationNetworkEditor.visual.view.IPanelResetable;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTabbedPane;
@@ -18,12 +19,12 @@ import javax.swing.event.ChangeListener;
  * @author andre
  */
 public class TabSwitchedListener<V,E> implements ChangeListener {
-    private EditorPane editorPane = null;
+    private IPanelResetable panelResetable = null;
     private JTabbedPane mainJtp = null;
 //    private Controller vvuml = null;
     
-    public TabSwitchedListener(EditorPane pEditorPane, JTabbedPane jtp) {//, Controller pVvuml) {
-        editorPane = pEditorPane;
+    public TabSwitchedListener(IPanelResetable pPanelResetable, JTabbedPane jtp) {//, Controller pVvuml) {
+        panelResetable = pPanelResetable;
         mainJtp = jtp;
 //        vvuml = pVvuml;
     }
@@ -34,22 +35,25 @@ public class TabSwitchedListener<V,E> implements ChangeListener {
         //ToolBox.ToolBox.printStackTrace();
         if(e.getSource() != null && e.getSource() instanceof JTabbedPane) {
             JTabbedPane jtp = (JTabbedPane)e.getSource();
-            editorPane.clearPanel();
+            panelResetable.clearPanel();
             switch (mainJtp.getSelectedIndex()) {
                 case 0: {   // physical
-                    Graph<V,E> graphPhys = editorPane.reinitializePhysical();
+                    Graph<V,E> graphPhys = panelResetable.reinitializePhysical();
+                    panelResetable.clearBothActionPanel();
 //                    vvuml.resetPhysGraph(graphPhys);
 //                    jtp.setSelectedIndex(0);
                 } break;
                 
                 case 1: { // virtual
-                    Graph<V,E> graphVirt = editorPane.reinitializeVirtual();
+                    Graph<V,E> graphVirt = panelResetable.reinitializeVirtual();
+                    panelResetable.clearBothActionPanel();
 //                    vvuml.resetVirtGraph(graphVirt);
 //                    jtp.setSelectedIndex(1);
                 } break;
                     
                 case 2: { // both
-                    editorPane.reinitializeBoth();
+                    panelResetable.reinitializeBoth();
+                    panelResetable.setBothActionPanel();
 //                    jtp.setSelectedIndex(2);
                 } break;
                     

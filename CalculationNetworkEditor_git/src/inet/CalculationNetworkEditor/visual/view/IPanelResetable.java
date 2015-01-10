@@ -5,6 +5,7 @@
  */
 package inet.CalculationNetworkEditor.visual.view;
 
+import edu.uci.ics.jung.graph.Graph;
 import java.util.Collection;
 import java.util.List;
 
@@ -13,6 +14,13 @@ import java.util.List;
  * @author andre
  */
 public interface IPanelResetable<V,E> {
+    public Graph<V,E> reinitializePhysical();
+    public Graph<V,E> reinitializeVirtual();
+    public void reinitializeBoth();
+    
+    public void setBothActionPanel();
+    public void clearBothActionPanel();
+    
     public void setStackingEdgePanel(E e, Collection<E> allPhysical);
     public void setStackingEdgeActualStackToEdge(E e);
     public void addStackingEdgePhyToPath();

@@ -13,9 +13,10 @@ import inet.CalculationNetworkEditor.Storage.IStorage;
 import inet.CalculationNetworkEditor.Transformers.EdgePaintTransformer;
 import inet.CalculationNetworkEditor.Transformers.VertexPaintTransformer;
 import inet.CalculationNetworkEditor.visual.contol.controller.BackendController;
+import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
+import inet.CalculationNetworkEditor.visual.control.listener.BothGraphActions;
 import inet.CalculationNetworkEditor.visual.control.listener.TabSwitchedListener;
 import inet.CalculationNetworkEditor.visual.control.listener.MouseAbstraction;
-import inet.CalculationNetworkEditor.visual.contol.controller.ViewController;
 import inet.CalculationNetworkEditor.visual.control.listener.EditingPanelsListener;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerBoth;
 import inet.CalculationNetworkEditor.visual.view.tabbedPane.VisualizationViewer.VisualizationViewerPhysical;
@@ -51,6 +52,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
     private CircleLayout<V, E> layoutBoth = null;
 */
     private JPanel editorPanel = null;
+    private JPanel rightBetweenPanel = null;
     private JPanel rightPanel = null;
     
     private VisualizationViewerPhysical<V, E> visViewPhysical = null;
@@ -101,10 +103,19 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         tabbedPane.setSize(tabbedDimensions);
         tabbedPane.setPreferredSize(tabbedDimensions);
         add(tabbedPane, BorderLayout.CENTER);
+
+        rightBetweenPanel = new JPanel();
+        rightBetweenPanel.setLayout(new BorderLayout());
+        rightBetweenPanel.setSize(200,500);
+        rightBetweenPanel.setPreferredSize(new Dimension(200,500));
+        add(rightBetweenPanel,BorderLayout.LINE_END);
+
         rightPanel = new JPanel();
         rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
-        add(rightPanel,BorderLayout.LINE_END);
+        rightBetweenPanel.add(rightPanel,BorderLayout.CENTER);
+        
+        
         
         vertexPaintTransformer = new VertexPaintTransformer<V,E>(logic, tabbedPane);
         edgePaintTransformer = new EdgePaintTransformer<V,E>(logic, tabbedPane);
@@ -179,6 +190,31 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
     }
     */
     
+    JPanel bottomRightPanel = null;
+    public void setBothActionPanel() {
+        bottomRightPanel = new JPanel();
+        bottomRightPanel.setLayout(new BorderLayout());
+        
+        BothGraphActions bga = new BothGraphActions();
+        
+        JButton relocate = new JButton("relocate");
+        relocate.addActionListener(bga);
+        
+        JButton visualize = new JButton("visualize");
+        visualize.addActionListener(bga);
+        
+        bottomRightPanel.add(relocate, BorderLayout.NORTH);
+        bottomRightPanel.add(visualize, BorderLayout.SOUTH);
+        
+        rightBetweenPanel.add(bottomRightPanel,BorderLayout.SOUTH);
+    }
+    public void clearBothActionPanel() {
+        if(bottomRightPanel != null) {
+            rightBetweenPanel.remove(bottomRightPanel);
+        }
+        bottomRightPanel = null;
+    }
+    
     
     // everything to create a Stacking Edge Panel
     private JComboBox<E> allPhysicalEdgeJCB = null;
@@ -233,12 +269,12 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
     public void setStackingEdgePanel(E e, Collection<E> allPhysicalCol) {
         virtE = e;
         
-        remove(rightPanel);
+        rightBetweenPanel.remove(rightPanel);
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        add(rightPanel, BorderLayout.LINE_END);
+        rightBetweenPanel.add(rightPanel, BorderLayout.CENTER);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
-        rightPanel.setSize(200,(int)actDimension.getHeight()-100);
+        rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
         
         // add Content Stacking-Label
@@ -365,10 +401,10 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         // empty Panel added
         virtV = v;
         
-        remove(rightPanel);
+        rightBetweenPanel.remove(rightPanel);
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        add(rightPanel, BorderLayout.LINE_END);
+        rightBetweenPanel.add(rightPanel, BorderLayout.CENTER);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
@@ -460,10 +496,10 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         vert = v;
         edge = e;
         
-        remove(rightPanel);
+        rightBetweenPanel.remove(rightPanel);
         rightPanel = new JPanel();
         rightPanel.setLayout(new BorderLayout());
-        add(rightPanel, BorderLayout.LINE_END);
+        rightBetweenPanel.add(rightPanel, BorderLayout.CENTER);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 10, 10));
         rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
@@ -492,18 +528,18 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         inputPanel.add(resInput, BorderLayout.NORTH);
         
         // JButton stack
-        JButton ok = new JButton("OK");
-        ok.addActionListener(editingPanelsListener);
-        rightPanel.add(ok,BorderLayout.SOUTH);
+        JButton okButton = new JButton("OK");
+        okButton.addActionListener(editingPanelsListener);
+        rightPanel.add(okButton,BorderLayout.SOUTH);
     }
     // end creating a Resource editing Panel
     
     
     
     public void clearPanel() {
-        remove(rightPanel);
+        rightBetweenPanel.remove(rightPanel);
         rightPanel = new JPanel();
-        add(rightPanel, BorderLayout.LINE_END);
+        rightBetweenPanel.add(rightPanel, BorderLayout.LINE_END);
         rightPanel.setBorder(BorderFactory.createEmptyBorder(20, 10, 500, 10));
         rightPanel.setSize(200,500);
         rightPanel.setPreferredSize(new Dimension(200,500));
