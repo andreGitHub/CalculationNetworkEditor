@@ -222,6 +222,9 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         bottomRightPanel = null;
     }
     
+    public void repaintBoth() {
+        visViewBoth.repaint();
+    }
     
     // everything to create a Stacking Edge Panel
     private JComboBox<E> allPhysicalEdgeJCB = null;

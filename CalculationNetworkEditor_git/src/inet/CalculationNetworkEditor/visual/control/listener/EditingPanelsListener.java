@@ -53,6 +53,7 @@ public class EditingPanelsListener<V,E> implements ActionListener{
                     }
                 }
                 
+                panelResetable.repaintBoth();
             } else if(source.getText().equals("add")) {
                 panelResetable.addStackingEdgePhyToPath();
             } else if(source.getText().equals("remove")) {

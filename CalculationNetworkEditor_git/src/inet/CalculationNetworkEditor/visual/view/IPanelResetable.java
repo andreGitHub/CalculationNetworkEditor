@@ -20,6 +20,7 @@ public interface IPanelResetable<V,E> {
     
     public void setBothActionPanel();
     public void clearBothActionPanel();
+    public void repaintBoth();
     
     public void setStackingEdgePanel(E e, Collection<E> allPhysical);
     public void setStackingEdgeActualStackToEdge(E e);
