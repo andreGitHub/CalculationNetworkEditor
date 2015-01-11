@@ -6,7 +6,6 @@
 package inet.CalculationNetworkEditor.visual.contol.controller;
 
 import edu.uci.ics.jung.algorithms.layout.GraphElementAccessor;
-import edu.uci.ics.jung.algorithms.layout.RadiusGraphElementAccessor;
 import edu.uci.ics.jung.visualization.Layer;
 import edu.uci.ics.jung.visualization.VisualizationViewer;
 import edu.uci.ics.jung.visualization.control.LayoutScalingControl;
@@ -425,31 +424,4 @@ public class ViewController<V,E> {
             }
         }
     }
-    /*
-    public V getPhysicalNearBy(Point p) {
-        VisualizationViewer<V,E> visView = getActualVisualizationViewer();
-        
-        Layout<V,E> layout = visView.getGraphLayout();
-        Collection<V> verts = visViewerPhysical.getGraphLayout().getGraph().getVertices();
-        
-        double minDist = Double.MAX_VALUE;
-        V minVert = null;
-        for(V vert : verts) {
-            Point2D p2 = layout.transform(vert);
-            double dist = p.distance(p2);
-            if(dist < minDist) {
-                minDist = dist;
-                minVert = vert;
-            } 
-        }
-        return minVert;
-    }
-    
-    public Point getPositionOfVertex(V v) {
-        VisualizationViewer<V,E> visView = getActualVisualizationViewer();
-        Layout<V,E> layout = visView.getGraphLayout();
-        
-        return (Point)layout.transform(v);
-    }
-    */
 }

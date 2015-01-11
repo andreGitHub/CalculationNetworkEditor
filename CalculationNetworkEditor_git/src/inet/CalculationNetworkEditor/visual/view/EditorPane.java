@@ -202,7 +202,7 @@ public class EditorPane<V,E> extends JPanel implements IPanelResetable<V,E> {
         bottomRightPanel = new JPanel();
         bottomRightPanel.setLayout(new BorderLayout());
         
-        BothGraphActions bga = new BothGraphActions();
+        BothGraphActions<V,E> bga = new BothGraphActions<V,E>(logic,visViewBoth);
         
         JButton relocate = new JButton("relocate");
         relocate.addActionListener(bga);
