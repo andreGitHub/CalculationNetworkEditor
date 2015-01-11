@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
-import javafx.util.Pair;
 
 /**
  *
@@ -27,6 +26,13 @@ public class StackingEdge<V,E> extends EdgeMap<V, E>{
         stacked = new HashMap<E,List<E>>();
     }
     
+    /**
+     * This method map a virtual edge to a path of physical edges and save it to
+     * the storage subsystem. It performs several validity checks.
+     * @param virt virtual edge
+     * @param phys list of physical edges
+     * @return true, if the edge can be stacked
+     */
     boolean stackEdge(E virt, List<E> phys) {
         if(virt == null || phys == null || phys.size() == 0) {
             return false;
@@ -50,7 +56,9 @@ public class StackingEdge<V,E> extends EdgeMap<V, E>{
         
         boolean valid = true;
         for(E phy : phys) {
-            if(getRessourcesOfEdgeLeft(phy) < getRessourcesOfEdge(virt)) {
+            double resPhy = getRessourcesOfEdgeLeft(phy);
+            double resVirt = getRessourcesOfEdge(virt);
+            if(resPhy < resVirt) {
                 valid = false;
                 break;
             }
@@ -102,8 +110,11 @@ public class StackingEdge<V,E> extends EdgeMap<V, E>{
         if(getType(phy) != IStorage.Type.PHYSICAL) {
             return -1.0d;
         }
-        if(!contains(phy) || !containsResources(phy)) {
+        if(!contains(phy)) {
             return -1.0d;
+        }
+        if(!containsResources(phy)) {
+            return 0.0d;
         }
         
         Collection<E> stack = getAllStackedEdgesOfEdge(phy);
