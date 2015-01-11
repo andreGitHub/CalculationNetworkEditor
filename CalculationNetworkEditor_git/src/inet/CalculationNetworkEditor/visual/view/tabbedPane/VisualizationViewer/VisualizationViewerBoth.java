@@ -94,9 +94,11 @@ public class VisualizationViewerBoth<V,E> extends VisualizationViewer<V, E> {
     }
     
     public void zoom() {
+        /*
         System.out.println("scale factor: " + getScaleFactor() + " select factor: " + 3.0d/getScaleFactor());
         float pickSize = ((ShapePickSupport<V,E>)getPickSupport()).getPickSize();
         ((ShapePickSupport<V,E>)getPickSupport()).setPickSize(pickSize*2);
+        */
     }
     
     public void setMouseAbstraction(MouseAbstraction<V,E> pMouse) {
