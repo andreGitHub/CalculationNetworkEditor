@@ -37,18 +37,23 @@ public class EdgeStrokeTransformer<V,E> implements Transformer<E, Stroke> {
                 return new BasicStroke(3.0f);
             }
             case 2: { //Both
-                if(logic.getTypeOfEdge(i) == IStorage.Type.PHYSICAL) {
-                    return new BasicStroke(3.0f);
-                } else if(logic.getTypeOfEdge(i) == IStorage.Type.VIRTUAL) {
-                    if(logic.getStackedEdgePath(i) == null) {
-                        // edge is not stacked
-                        BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
-                        return dashed;
-                    } else {
+                if(logic.containsEdge(i)) {
+                    if(logic.getTypeOfEdge(i) == IStorage.Type.PHYSICAL) {
                         return new BasicStroke(3.0f);
+                    } else if(logic.getTypeOfEdge(i) == IStorage.Type.VIRTUAL) {
+                        if(logic.getStackedEdgePath(i) == null) {
+                            // edge is not stacked
+                            BasicStroke dashed = new BasicStroke(3.0f, BasicStroke.CAP_BUTT, BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+                            return dashed;
+                        } else {
+                            return new BasicStroke(3.0f);
+                        }
+                    } else {
+                        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown edge type");
                     }
                 } else {
-                    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown edge type");
+                    // it is an edge which only exists in frontend for visualization purpose
+                    return new BasicStroke(3.0f);
                 }
             } break;
             default: {

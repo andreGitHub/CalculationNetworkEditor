@@ -37,19 +37,25 @@ public class VertexPaintTransformerStacking<V, E> extends VertexPaintTransformer
                 return sup;
             }
             case 2: { // both
-                if(logic.getTypeOfVertex(v) == IStorage.Type.PHYSICAL) {
-                    return sup;
-                } else if(logic.getTypeOfVertex(v) == IStorage.Type.VIRTUAL) {
-            
-                    if(logic.getStackedVertexTo(v) == null) {
-                        // vertex is not stacked to another vertex
-                        return transparent;
-                    } else {
+                if(logic.containsVertex(v)) {
+                    if(logic.getTypeOfVertex(v) == IStorage.Type.PHYSICAL) {
                         return sup;
-                    }
+                    } else if(logic.getTypeOfVertex(v) == IStorage.Type.VIRTUAL) {
+                        
+                        if(logic.getStackedVertexTo(v) == null) {
+                            // vertex is not stacked to another vertex
+                            return transparent;
+                        } else {
+                            return sup;
+                        }
                     
+                    } else {
+                        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown vertex type");
+                    }
                 } else {
-                    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown vertex type");
+                    // logic/storage subsystem does not contain vertex
+                    // vertex is only used for visualization purpose
+                    return new Color(0,0,255);
                 }
             } break;
             default: {

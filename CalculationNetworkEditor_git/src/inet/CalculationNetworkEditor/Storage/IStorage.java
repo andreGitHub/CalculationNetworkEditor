@@ -40,6 +40,13 @@ public interface IStorage<V,E> {
     public boolean containsVertex(V v);
     
     /**
+     * Return if an edge is already stored or not.
+     * @param e Edge, which is checked.
+     * @return True, if e is already stored.
+     */
+    public boolean containsEdge(E e);
+    
+    /**
      * Add a Vertex to the data structures.
      * @param v Vertex, which should be added. 
      * @param t Type of the veretx, which should be added.

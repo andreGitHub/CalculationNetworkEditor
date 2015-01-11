@@ -152,6 +152,11 @@ public class Logic<V,E> implements ILogic<V, E>{
     public boolean containsVertex(V v) {
         return storage.containsVertex(v);
     }
+
+    @Override
+    public boolean containsEdge(E e) {
+        return storage.containsEdge(e);
+    }
     
     @Override
     public IStorage.Type getTypeOfVertex(V v) {
@@ -259,6 +264,16 @@ public class Logic<V,E> implements ILogic<V, E>{
     @Override
     public boolean unstackEdge(E virt) {
         return storage.unstackEdge(virt);
+    }
+    
+    @Override
+    public V getEdgeSource(E e) {
+        return storage.getEdgeSource(e);
+    }
+    
+    @Override
+    public V getEdgeDest(E e) {
+        return storage.getEdgeDest(e);
     }
     
     @Override

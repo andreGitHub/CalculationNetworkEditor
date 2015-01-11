@@ -29,6 +29,7 @@ public class EdgePaintTransformer<V,E> implements Transformer<E,Paint>{
     private ILogic<V,E> logic = null;
     private Paint colorPhysical = new Color(129, 0, 0); // red wine
     private Paint colorVirtual = new Color(0, 129, 9); // lime green
+    private Paint colorVisual = new Color(0,0,255);
     
     private Paint colorPickedPhysical = new Color(255, 0, 0);
     private Paint colorPickedVirtual = new Color(0, 255, 0);
@@ -82,40 +83,46 @@ public class EdgePaintTransformer<V,E> implements Transformer<E,Paint>{
                 
             }
             case 2: { // both
-                if(logic.getTypeOfEdge(e) == IStorage.Type.PHYSICAL) {
-                    Collection<E> stack = logic.getEdgeStack(e);
-                    PickedState psE = vvBoth.getPickedEdgeState();
-                    Object[] selectedE = psE.getSelectedObjects();
-                    for(int i = 0; i<selectedE.length; i++) {
-                        for(E stackElem : stack) {
-                            if(selectedE[i].equals(stackElem)) {
-                                return colorPickedStack;
-                            }
-                        }
-                        if(selectedE[i].equals(e)) {
-                            return colorPickedStack;
-                        }
-                    }
-                    return colorPhysical;
-                } else if(logic.getTypeOfEdge(e) == IStorage.Type.VIRTUAL) {
-                    List<E> stackedEdgesTo = logic.getStackedEdgePath(e);
-                    PickedState psE = vvBoth.getPickedEdgeState();
-                    Object[] selectedE = psE.getSelectedObjects();
-                    for(int i = 0; i<selectedE.length; i++) {
-                        if(stackedEdgesTo != null) {
-                            for(E stackedEdgeTo : stackedEdgesTo) {
-                                if(selectedE[i].equals(stackedEdgeTo)) {
+                if(logic.containsEdge(e)) {
+                    if(logic.getTypeOfEdge(e) == IStorage.Type.PHYSICAL) {
+                        Collection<E> stack = logic.getEdgeStack(e);
+                        PickedState psE = vvBoth.getPickedEdgeState();
+                        Object[] selectedE = psE.getSelectedObjects();
+                        for(int i = 0; i<selectedE.length; i++) {
+                            for(E stackElem : stack) {
+                                if(selectedE[i].equals(stackElem)) {
                                     return colorPickedStack;
                                 }
                             }
+                            if(selectedE[i].equals(e)) {
+                                return colorPickedStack;
+                            }
                         }
-                        if(selectedE[i].equals(e)) {
-                            return colorPickedStack;
+                        return colorPhysical;
+                    } else if(logic.getTypeOfEdge(e) == IStorage.Type.VIRTUAL) {
+                        List<E> stackedEdgesTo = logic.getStackedEdgePath(e);
+                        PickedState psE = vvBoth.getPickedEdgeState();
+                        Object[] selectedE = psE.getSelectedObjects();
+                        for(int i = 0; i<selectedE.length; i++) {
+                            if(stackedEdgesTo != null) {
+                                for(E stackedEdgeTo : stackedEdgesTo) {
+                                    if(selectedE[i].equals(stackedEdgeTo)) {
+                                        return colorPickedStack;
+                                    }
+                                }
+                            }
+                            if(selectedE[i].equals(e)) {
+                                return colorPickedStack;
+                            }
                         }
+                        return colorVirtual;
+                    } else {
+                        Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown edge type");
                     }
-                    return colorVirtual;
                 } else {
-                    Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "unknown edge type");
+                    // edge does not exist in logic/storage subsystem
+                    // it is only used for visualization purpose
+                    return colorVisual;
                 }
             } break;
             default: {

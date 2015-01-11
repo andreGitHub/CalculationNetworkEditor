@@ -53,6 +53,13 @@ public interface ILogic<V,E> {
     public boolean containsVertex(V v);
     
     /**
+     * Return if an edge is already stored or not.
+     * @param e Edge, which is checked.
+     * @return True, if e is already stored.
+     */
+    public boolean containsEdge(E e);
+    
+    /**
      * Return the graph, containing all graph - elements of the specified type. 
      * These graphs are the graphs, which are displayed at Physical, Virtual and Both - View.
      * @param t type of the graph, which should be returned.
@@ -150,6 +157,20 @@ public interface ILogic<V,E> {
      * @return true, if the edge is sucessfully unstacked.
      */
     public boolean unstackEdge(E virt);
+    
+    /**
+     * Get first endpoint of edge. 
+     * @param e edge of interest.
+     * @return first endpoint.
+     */
+    public V getEdgeSource(E e);
+    
+    /**
+     * Get second endpoint of edge. 
+     * @param e edge of interest.
+     * @return second endpoint.
+     */
+    public V getEdgeDest(E e);
     
     /**
      * This method test if a given physical path is valid an can be added to the

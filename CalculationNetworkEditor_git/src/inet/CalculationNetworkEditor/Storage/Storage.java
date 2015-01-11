@@ -30,6 +30,11 @@ public class Storage<V, E> implements IStorage<V,E> {
     }
     
     @Override
+    public boolean containsEdge(E e) {
+        return edges.contains(e);
+    }
+    
+    @Override
     public Type getTypeOfVertex(V v) {
         return vertexes.getType(v);
     }
