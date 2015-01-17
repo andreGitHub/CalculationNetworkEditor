@@ -29,7 +29,7 @@ public class EdgePaintTransformer<V,E> implements Transformer<E,Paint>{
     private ILogic<V,E> logic = null;
     private Paint colorPhysical = new Color(129, 0, 0); // red wine
     private Paint colorVirtual = new Color(0, 129, 9); // lime green
-    private Paint colorVisual = new Color(0,0,255);
+    private Paint colorVisual = new Color(102,85,17);
     
     private Paint colorPickedPhysical = new Color(255, 0, 0);
     private Paint colorPickedVirtual = new Color(0, 255, 0);

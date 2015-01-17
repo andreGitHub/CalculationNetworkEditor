@@ -60,6 +60,13 @@ public class BothGraphActions<V,E> implements ActionListener{
         Collection<V> physical = logic.getAllVertOfType(IStorage.Type.PHYSICAL);
         for(V phy : physical) {
             Collection<V> mapping = logic.getVertexStack(phy);
+            
+            for(V visual : visualPhysicalV.keySet()) {
+                if(visualPhysicalV.get(visual) == phy) {
+                    mapping.add(visual);
+                }
+            }
+            
             Point2D pAct = layout.transform(phy);
             for(V mapped : mapping) {
                 if(!mapped.equals(phy)) {
@@ -74,16 +81,39 @@ public class BothGraphActions<V,E> implements ActionListener{
     }
     
     private HashMap<V,V> visualPhysicalV = new HashMap<V,V>();
-    //private HashMap<E,E> visualPhysicalE = new HashMap<E,E>();
+    private HashMap<E,E> visualPhysicalE = new HashMap<E,E>();
     
     /**
-     * This method copy path of stacked edges and add them to the graph
+     * This method insert further graph elements in the visualization component.
+     * These graph elements are painted in greenbrown and act as visualization components.
+     * The method copy path of stacked edges and add them to the graph.
      */
     public void visualizeStacking() {
         Layout<V,E> layout = visViewBoth.getGraphLayout();
+        
+        // delete all previousely added visual components
+        for(E e : visualPhysicalE.keySet()) {
+            layout.getGraph().removeEdge(e);
+        }
+        visualPhysicalE = new HashMap<E,E>();
+        for(V v : visualPhysicalV.keySet()) {
+            layout.getGraph().removeVertex(v);
+        }
+        visualPhysicalV = new HashMap<V,V>();
+        
+        // add visualizing components
         Collection<E> virtualE = logic.getAllEdgesOfType(IStorage.Type.VIRTUAL);
         for(E virt : virtualE) {
-            List<E> path = logic.getStackedEdgePath(virt);
+            List<E> pathOrig = logic.getStackedEdgePath(virt);
+            List<E> path = new ArrayList<E>();
+            if(pathOrig == null) {
+                path = null;
+            } else {
+                for(E pe : pathOrig) {
+                    path.add(pe);
+                }
+            }
+            
             if(path != null && path.size()>1) {
                 // copy path to graph and hashmaps
                 V firstVirtual = logic.getEdgeSource(virt);
@@ -95,61 +125,87 @@ public class BothGraphActions<V,E> implements ActionListener{
                 V actVertPhy = firstPhysical;
                 V actVertVirt = firstVirtual;
                 ArrayList<E> pathCopy = new ArrayList<E>();
-                while(pathCopy.size()<path.size()){
-                    for(E e : path) {
-                        if(logic.getEdgeSource(e) == actVertPhy) {
-                            if(logic.getEdgeDest(e) == secondPhysical) {
+                
+                int pathSize = path.size();
+                while(pathCopy.size()<pathSize){
+                    for(E pathElem : path) {
+                        V pathElemSource = logic.getEdgeSource(pathElem);
+                        V pathElemDest = logic.getEdgeDest(pathElem);
+                        if(pathElemSource == actVertPhy) {
+                            if(pathElemDest == secondPhysical) {
                                 E tmpEdgeVisu = edgeFactory.create();
                                 pathCopy.add(tmpEdgeVisu);
                                 layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, secondVirtual);
-                            
-                                actVertPhy = logic.getEdgeDest(e);
+                                visualPhysicalE.put(tmpEdgeVisu, pathElem);
+                                
+                                actVertPhy = logic.getEdgeDest(pathElem);
                                 actVertVirt = secondVirtual;
-                            
-                                break;
-                            } else {
-                                V tmpVertVisu = vertexFactory.create();
-                                layout.getGraph().addVertex(tmpVertVisu);
-                                E tmpEdgeVisu = edgeFactory.create();
-                                pathCopy.add(tmpEdgeVisu);
-                                layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, tmpVertVisu);
-                            
-                                actVertPhy = logic.getEdgeDest(e);
-                                actVertVirt = tmpVertVisu;
-                            
-                                break;
-                            }
-                        } else if(logic.getEdgeDest(e) == actVertVirt) {
-                            if(logic.getEdgeSource(e) == secondPhysical) {
-                                E tmpEdgeVisu = edgeFactory.create();
-                                pathCopy.add(tmpEdgeVisu);
-                                layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, secondVirtual);
-                            
-                                actVertPhy = logic.getEdgeSource(e);
-                                actVertVirt = secondVirtual;
+                                
+                                path.remove(pathElem);
                                 
                                 break;
                             } else {
-                                V tmpVertVisu = vertexFactory.create();
-                                layout.getGraph().addVertex(tmpVertVisu);
+                                actVertVirt = addVertexAndEdgeForeward(layout,pathCopy,pathElem,actVertVirt);
+                                actVertPhy = logic.getEdgeDest(pathElem);
+                                
+                                path.remove(pathElem);
+                                
+                                break;
+                            }
+                        } else if(pathElemDest == actVertPhy) {
+                            if(pathElemSource == secondPhysical) {
                                 E tmpEdgeVisu = edgeFactory.create();
                                 pathCopy.add(tmpEdgeVisu);
-                                layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, tmpVertVisu);
-                            
-                                actVertPhy = logic.getEdgeSource(e);
-                                actVertVirt = tmpVertVisu;
+                                layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, secondVirtual);
+                                visualPhysicalE.put(tmpEdgeVisu, pathElem);
+                                
+                                actVertPhy = logic.getEdgeSource(pathElem);
+                                actVertVirt = secondVirtual;
+                                
+                                path.remove(pathElem);
+                                
+                                break;
+                            } else {
+                                
+                                actVertVirt = addVertexAndEdgeBackward(layout,pathCopy,pathElem,actVertVirt);
+                                actVertPhy = logic.getEdgeSource(pathElem);
+                                
+                                path.remove(pathElem);
                                 
                                 break;
                             }
                         }
                     }
                 }
+                visViewBoth.getGraphLayout().getGraph().removeEdge(virt);
             }
         }
         visViewBoth.repaint();
     }
     
+    private V addVertexAndEdgeForeward(Layout<V,E> layout, ArrayList<E> pathCopy, E pathElem, V actVertVirt) {
+        V tmpVertVisu = vertexFactory.create();
+        layout.getGraph().addVertex(tmpVertVisu);
+        visualPhysicalV.put(tmpVertVisu, logic.getEdgeDest(pathElem));
+        E tmpEdgeVisu = edgeFactory.create();
+        pathCopy.add(tmpEdgeVisu);
+        layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, tmpVertVisu);
+        visualPhysicalE.put(tmpEdgeVisu, pathElem);
+        
+        return tmpVertVisu;
+    }
     
+    private V addVertexAndEdgeBackward(Layout<V,E> layout, ArrayList<E> pathCopy, E pathElem, V actVertVirt) {
+        V tmpVertVisu = vertexFactory.create();
+        layout.getGraph().addVertex(tmpVertVisu);
+        visualPhysicalV.put(tmpVertVisu, logic.getEdgeSource(pathElem));
+        E tmpEdgeVisu = edgeFactory.create();
+        pathCopy.add(tmpEdgeVisu);
+        layout.getGraph().addEdge(tmpEdgeVisu, actVertVirt, tmpVertVisu);
+        visualPhysicalE.put(tmpEdgeVisu, pathElem);
+        
+        return tmpVertVisu;
+    }
     
     ////////////////////////////////////////////////////////////////////////////
     

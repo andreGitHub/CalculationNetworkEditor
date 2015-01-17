@@ -20,10 +20,12 @@ import javax.swing.JTabbedPane;
 public class VertexPaintTransformerStacking<V, E> extends VertexPaintTransformer<V, E>{
 
     private Paint transparent = null;
+    private Paint greenbrown = null;
     
     public VertexPaintTransformerStacking(ILogic<V, E> pLogic, JTabbedPane pJtp) {
         super(pLogic, pJtp);
         transparent = new Color(0,0,0,0);
+        greenbrown = new Color(102,85,17);
     }
     
     @Override
@@ -55,7 +57,7 @@ public class VertexPaintTransformerStacking<V, E> extends VertexPaintTransformer
                 } else {
                     // logic/storage subsystem does not contain vertex
                     // vertex is only used for visualization purpose
-                    return new Color(0,0,255);
+                    return greenbrown;
                 }
             } break;
             default: {
